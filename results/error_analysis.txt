@@ -1,0 +1,20 @@
+StressSense - error analysis (test set)
+==========================================
+
+Per-class F1: baseline=0.52, stress=0.46, aerobic=0.62, anaerobic=0.51
+Easiest class: aerobic (F1=0.62); hardest class: stress (F1=0.46).
+
+Does the model separate mental stress from physical activity?
+  - 0.0% of true STRESS windows were misread as physical activity (aerobic/anaerobic).
+  - 0.0% of true AEROBIC windows were misread as STRESS.
+  - 0.0% of true ANAEROBIC windows were misread as STRESS.
+  => The model largely separates stress from physical activity.
+
+Aerobic vs. anaerobic (both are cycling exercise):
+  - aerobic->anaerobic: 30.5% | anaerobic->aerobic: 30.0%
+
+Baseline vs. stress (within the same stress sessions):
+  - baseline->stress: 7.3% | stress->baseline: 66.7%
+
+Note: results come from a small, controlled lab dataset with few subjects and
+one session per activity, so absolute numbers should be read with caution.

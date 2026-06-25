@@ -1,0 +1,14 @@
+Accuracy: 0.5399
+Macro-F1: 0.5268
+
+              precision    recall  f1-score   support
+
+    baseline       0.44      0.65      0.52       150
+      stress       0.76      0.33      0.46       102
+     aerobic       0.61      0.62      0.62       200
+   anaerobic       0.54      0.48      0.51       200
+
+    accuracy                           0.54       652
+   macro avg       0.58      0.52      0.53       652
+weighted avg       0.57      0.54      0.54       652
+

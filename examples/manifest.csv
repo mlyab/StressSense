@@ -1,0 +1,13 @@
+file,true_label,subject
+example_baseline_1.csv,baseline,S15
+example_baseline_2.csv,baseline,S09
+example_baseline_3.csv,baseline,S03
+example_stress_1.csv,stress,S02
+example_stress_2.csv,stress,S15
+example_stress_3.csv,stress,f17
+example_aerobic_1.csv,aerobic,S09
+example_aerobic_2.csv,aerobic,S15
+example_aerobic_3.csv,aerobic,S14
+example_anaerobic_1.csv,anaerobic,S09
+example_anaerobic_2.csv,anaerobic,S14
+example_anaerobic_3.csv,anaerobic,S02

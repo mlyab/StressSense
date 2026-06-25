@@ -1,0 +1,61 @@
+# StressSense configuration.
+# All paths are resolved relative to this file's location, so the scripts can be
+# run from any working directory.
+
+seed: 42
+
+data:
+  # Root of the extracted PhysioNet dataset: the folder that directly contains
+  # `Wearable_Dataset/` and the `Stress_Level_v*.csv` files.
+  dataset_root: "wearable-device-dataset-from-induced-stress-and-structured-exercise-sessions-1.0.1/wearable-device-dataset-from-induced-stress-and-structured-exercise-sessions-1.0.1"
+  cache_path: "data/windows.npz"     # built by dataset.py, consumed by everything else
+  examples_dir: "examples"           # exported example windows for the demo
+
+signals:
+  # Channels fed to the model. ACC is converted to a within-bin motion-intensity
+  # envelope (see dataset.py). BVP (64 Hz) is intentionally not used as a raw
+  # channel: downsampling it to the common grid destroys the pulse waveform, so
+  # we use Empatica's derived HR instead. See README "Limitations".
+  channels: [EDA, TEMP, HR, ACC]
+  target_fs: 4                       # Hz, common resampling grid for all channels
+
+windows:
+  window_sec: 30                     # window length in seconds
+  stride_sec: 15                     # hop between consecutive windows (50% overlap)
+  baseline_sec: 180                  # rest taken from just before the first event tag
+  max_windows_per_session_class: 40  # cap to limit long exercise sessions dominating
+  min_coverage: 0.9                  # min fraction of a window backed by real (non-edge) samples
+
+labels:
+  classes: [baseline, stress, aerobic, anaerobic]
+
+segmentation:
+  # Which session types contribute "baseline" (pre-task rest) windows.
+  baseline_from: [STRESS, AEROBIC, ANAEROBIC]
+  # Sessions to drop because of documented sensor problems (data_constraints.txt).
+  # Each entry is [activity, subject].
+  exclude:
+    - [STRESS, f07]                  # protection dock covered the PPG and TEMP sensors
+
+split:
+  by: subject                        # group split: a subject is entirely in one split
+  train: 0.70
+  val: 0.15
+  test: 0.15
+
+model:
+  conv_channels: [32, 64, 128]
+  kernel_size: 7
+  dropout: 0.3
+
+train:
+  batch_size: 64
+  epochs: 40
+  lr: 0.001
+  weight_decay: 0.0001
+  class_weighting: true              # weight the loss by inverse class frequency
+  early_stopping_patience: 10        # epochs without val macro-F1 improvement
+
+paths:
+  models_dir: "models"
+  results_dir: "results"

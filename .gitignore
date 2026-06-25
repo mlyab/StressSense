@@ -1,0 +1,21 @@
+# Raw PhysioNet dataset (not redistributed here; see README for download link)
+wearable-device-dataset-from-induced-stress-and-structured-exercise-sessions-1.0.1/
+*.zip
+
+# Built window cache
+data/windows.npz
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Keep the trained model and result plots tracked so the demo works after clone,
+# but ignore scratch outputs.
+results/_scratch/
